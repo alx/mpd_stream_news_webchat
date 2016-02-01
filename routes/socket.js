@@ -64,7 +64,7 @@ var youtubeDl = (function () {
 
 var chatLog = (function () {
 
-  var filepath = path.resolve(__dirname, 'public/chatlog.json');
+  var filepath = path.resolve(__dirname, '../public/chatlog.json');
 
   var init = function() {
     try {
