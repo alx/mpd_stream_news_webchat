@@ -66,18 +66,6 @@ var chatLog = (function () {
 
   var filepath = path.resolve(__dirname, '../public/chatlog.json');
 
-  var init = function() {
-    try {
-      fs.accessSync(filepath, fs.F_OK);
-      var log = getLogs();
-      if( Object.prototype.toString.call( log ) !== '[object Array]' ) {
-        fs.writeFile(filepath, "[]");
-      }
-    } catch (e) {
-      fs.writeFile(filepath, "[]");
-    }
-  }
-
   var saveMessage = function(message) {
     var log = getLogs();
     fs.writeFile(filepath, JSON.stringify(log.concat(message)));
@@ -89,7 +77,6 @@ var chatLog = (function () {
   };
 
   return {
-    init: init,
     saveMessage: saveMessage,
     getLogs: getLogs
   };
@@ -149,7 +136,6 @@ var userNames = (function () {
 // export function for listening to the socket
 module.exports = function (socket) {
   var name = userNames.getGuestName();
-  chatLog.init();
 
   // send the new user their name and a list of users
   socket.emit('init', {
@@ -170,8 +156,12 @@ module.exports = function (socket) {
       text: data.text,
       timestamp: data.timestamp
     };
-    chatLog.saveMessage(message);
-    socket.broadcast.emit('send:message', message);
+    if(!userNames.claim(message.user) &&
+       message.text.length > 0 &&
+       message.timestamp > 0) {
+      chatLog.saveMessage(message);
+      socket.broadcast.emit('send:message', message);
+    }
   });
 
   // validate a user's name change, and broadcast it on success
