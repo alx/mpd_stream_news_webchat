@@ -1,4 +1,5 @@
 var fs = require("fs");
+var path = require("path");
 
 var youtubeDl = (function () {
 
@@ -63,7 +64,7 @@ var youtubeDl = (function () {
 
 var chatLog = (function () {
 
-  var filepath = 'public/chatlog.json';
+  var filepath = path.resolve(__dirname, 'public/chatlog.json');
 
   var init = function() {
     try {
