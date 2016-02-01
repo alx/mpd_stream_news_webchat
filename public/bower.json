@@ -1,0 +1,23 @@
+{
+  "name": "naissance-tactac",
+  "description": "",
+  "main": "app.js",
+  "authors": [
+    "Alexandre Girard <git@alexgirard.com>"
+  ],
+  "license": "MIT",
+  "moduleType": [],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "jPlayer": "jplayer#^2.9.2"
+  }
+}

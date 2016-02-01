@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<link rel="stylesheet" href="css/style.css">
+	<title>Naissance 2016</title>
+  <!-- bower:css -->
+  <!-- endbower -->
+  <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+  <div id="chat">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <span class="glyphicon glyphicon-comment"></span> Chat
+                    </div>
+                    <div class="panel-body">
+                        <ul class="chat">
+                            <li class="left clearfix"><span class="chat-img pull-left">
+                              <div class="chat-body clearfix">
+                                  <div class="header">
+                                      <strong class="primary-font">Jack Sparrow</strong> <small class="pull-right text-muted">
+                                          <span class="glyphicon glyphicon-time"></span>12 mins ago</small>
+                                  </div>
+                                  <p>
+                                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
+                                      dolor, quis ullamcorper ligula sodales.
+                                  </p>
+                              </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="input-group">
+                            <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
+                            <span class="input-group-btn">
+                                <button class="btn btn-warning btn-sm" id="btn-chat">
+                                    Send</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  <div id="music"></div>
+  <!-- bower:js -->
+  <!-- endbower -->
+	<script src="/socket.io/socket.io.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
