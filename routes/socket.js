@@ -7,7 +7,7 @@ var mpdClient = komponist.createConnection(6618, 'swyn.fr');
 
 var youtubeDl = (function () {
 
-  var downloadPath = 'public/youtube/';
+  var downloadPath = path.resolve(__dirname, '../public/download/');
 
   var testUrl = function(url){
     var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
