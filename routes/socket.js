@@ -68,6 +68,11 @@ var youtubeDl = (function () {
     });
   };
 
+  return {
+    testUrl: testUrl,
+    download: download
+  };
+
 }());
 
 var chatLog = (function () {
