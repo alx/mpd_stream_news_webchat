@@ -60,6 +60,7 @@ var youtubeDl = (function () {
     destination = "";
 
     proc.stdout.on('data', function (data) {
+      data = JSON.stringify(data);
       downloadData += data;
       if(data.indexOf("Destination:") != -1) {
         destination = data.split('Destination: ').pop();
@@ -68,6 +69,7 @@ var youtubeDl = (function () {
     });
 
     proc.stderr.on('data', function (data) {
+      data = JSON.stringify(data);
       errorData += data;
       console.log('stderr: ' + data);
     });
