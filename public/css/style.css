@@ -1,7 +1,5 @@
 body{
-	width: 600px;
-	margin: 0 auto;
-	border: 5px solid tomato;
+  padding-top:15px;
 }
 .users{
 	float : right;
