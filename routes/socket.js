@@ -64,12 +64,12 @@ var youtubeDl = (function () {
       if(data.indexOf("Destination:") != -1) {
         destination = data.split('Destination: ').pop();
       }
-      //console.log('stdout: ' + data);
+      console.log('stdout: ' + data);
     });
 
     proc.stderr.on('data', function (data) {
       errorData += data;
-      //console.log('stderr: ' + data);
+      console.log('stderr: ' + data);
     });
 
     proc.on('exit', function (code) {
