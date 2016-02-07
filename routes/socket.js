@@ -45,26 +45,37 @@ var youtubeDl = (function () {
       '--no-overwrites',
       '--write-thumbnail',
       '--extract-audio',
-      '--audio-format mp3',
+      '--audio-format',
+      'mp3',
       '--embed-thumbnail',
-      url]
+      url],
+      {
+        cwd : downloadPath
+      }
     );
 
     downloadData = "";
     errorData = "";
+    destination = "";
 
     proc.stdout.on('data', function (data) {
-      downloadingData += data;
-      console.log('stdout: ' + data);
+      downloadData += data;
+      if(data.indexOf("Destination:") != -1) {
+        destination = data.split('Destination: ').pop();
+      }
+      //console.log('stdout: ' + data);
     });
 
     proc.stderr.on('data', function (data) {
       errorData += data;
-      console.log('stderr: ' + data);
+      //console.log('stderr: ' + data);
     });
 
     proc.on('exit', function (code) {
-      mpdClient.add(newSong);
+      if(errorData.length == 0) {
+        console.log(destination);
+        mpdClient.add(destination);
+      }
     });
   };
 
