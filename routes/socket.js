@@ -1,9 +1,18 @@
 var fs = require("fs");
 var path = require("path");
+var komponist = require('komponist');
+
+var mpdClient = komponist.createConnection(6618, 'swyn.fr');
 
 var youtubeDl = (function () {
 
   var downloadPath = 'public/youtube/';
+
+  var testUrl = function(url){
+    var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+    var match = url.match(regExp);
+    return (match&&match[7].length==11)? match[7] : false;
+  }
 
   var getFileDetails = function(request, callback) {
     var buffer = [];
@@ -28,35 +37,34 @@ var youtubeDl = (function () {
     });
   };
 
-  var downloadFromYoutube = function(query) {
-    var proc = spawn('youtube-dl'
-      , ['-t', '--cookies=cookies.txt', query.url],
-      {
-        cwd : downloadPath
-      }
+  var downloadFromYoutube = function(url) {
+
+    var proc = spawn('youtube-dl',
+      ['--no-playlist',
+      '--restrict-filenames',
+      '--no-overwrites',
+      '--write-thumbnail',
+      '--extract-audio',
+      '--audio-format mp3',
+      '--embed-thumbnail',
+      url]
     );
 
-    downloading = true;
+    downloadData = "";
+    errorData = "";
 
     proc.stdout.on('data', function (data) {
+      downloadingData += data;
       console.log('stdout: ' + data);
-      status = {
-        file : query,
-        message : data.toString()
-      };
     });
 
     proc.stderr.on('data', function (data) {
+      errorData += data;
       console.log('stderr: ' + data);
     });
 
     proc.on('exit', function (code) {
-
-      downloading = false;
-
-      if (queue.length) {
-        downloadFile(queue.shift());
-      }
+      mpdClient.add(newSong);
     });
   };
 
@@ -159,8 +167,13 @@ module.exports = function (socket) {
     if(!userNames.claim(message.user) &&
        message.text.length > 0 &&
        message.timestamp > 0) {
-      chatLog.saveMessage(message);
+      if(youtubeDl.testUrl(message.text)) {
+        message.text = message.user + " a rajouté la piste: <a href='" + message.text + "'>" + message.text + "</a>";
+        message.user = "BIBOT";
+        youtubeDl.
+      }
       socket.broadcast.emit('send:message', message);
+      chatLog.saveMessage(message);
     }
   });
 
