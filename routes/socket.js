@@ -1,5 +1,6 @@
 var fs = require("fs");
 var path = require("path");
+var spawn = require('child_process').spawn;
 var komponist = require('komponist');
 
 var mpdClient = komponist.createConnection(6618, 'swyn.fr');
