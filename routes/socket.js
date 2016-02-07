@@ -3,7 +3,9 @@ var path = require("path");
 var spawn = require('child_process').spawn;
 var komponist = require('komponist');
 
-var mpdClient = komponist.createConnection(6618, 'swyn.fr');
+var mpdClient = komponist.createConnection(6618, 'swyn.fr', function() {
+  mpdClient.command('password', 'simplepass2323');
+});
 
 var youtubeDl = (function () {
 
@@ -60,7 +62,7 @@ var youtubeDl = (function () {
     destination = "";
 
     proc.stdout.on('data', function (data) {
-      data = JSON.stringify(data);
+      data = data.toString();
       downloadData += data;
       if(data.indexOf("Destination:") != -1) {
         destination = data.split('Destination: ').pop();
@@ -69,15 +71,15 @@ var youtubeDl = (function () {
     });
 
     proc.stderr.on('data', function (data) {
-      data = JSON.stringify(data);
+      data = data.toString();
       errorData += data;
       console.log('stderr: ' + data);
     });
 
     proc.on('exit', function (code) {
       if(errorData.length == 0) {
-        console.log(destination);
-        mpdClient.add(destination);
+        console.log(path.resolve(downloadPath, destination))
+        mpdClient.add(path.resolve(downloadPath, destination));
       }
     });
   };
