@@ -37,7 +37,7 @@ var youtubeDl = (function () {
     });
   };
 
-  var downloadFromYoutube = function(url) {
+  var download = function(url) {
 
     var proc = spawn('youtube-dl',
       ['--no-playlist',
@@ -168,9 +168,9 @@ module.exports = function (socket) {
        message.text.length > 0 &&
        message.timestamp > 0) {
       if(youtubeDl.testUrl(message.text)) {
+        youtubeDl.download(message.text);
         message.text = message.user + " a rajouté la piste: <a href='" + message.text + "'>" + message.text + "</a>";
         message.user = "BIBOT";
-        youtubeDl.
       }
       socket.broadcast.emit('send:message', message);
       chatLog.saveMessage(message);
