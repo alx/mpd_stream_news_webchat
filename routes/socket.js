@@ -65,7 +65,7 @@ var youtubeDl = (function () {
       data = data.toString();
       downloadData += data;
       if(data.indexOf("Destination:") != -1) {
-        destination = data.split('Destination: ').pop();
+        destination = data.split('Destination: ').pop().trim();
       }
       console.log('stdout: ' + data);
     });
@@ -78,7 +78,7 @@ var youtubeDl = (function () {
 
     proc.on('exit', function (code) {
       if(errorData.length == 0) {
-        console.log(path.resolve(downloadPath, destination))
+        console.log(destination);
         mpdClient.rescan(function() {
           mpdClient.add(destination);
         });
