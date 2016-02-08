@@ -79,7 +79,9 @@ var youtubeDl = (function () {
     proc.on('exit', function (code) {
       if(errorData.length == 0) {
         console.log(path.resolve(downloadPath, destination))
-        mpdClient.add(destination);
+        mpdClient.rescan(function() {
+          mpdClient.add(destination);
+        });
       }
     });
   };
