@@ -57,9 +57,6 @@ var MusicControl = React.createClass({
                 <button className="jp-play" role="button" tabIndex="0">play</button>
               </div>
             </div>
-            <div className="jp-details">
-              <div className="jp-title" aria-label="title">&nbsp;</div>
-            </div>
             <div className="jp-no-solution">
               <span>Update Required</span>
               To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.

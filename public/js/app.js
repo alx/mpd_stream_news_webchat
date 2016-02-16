@@ -19877,15 +19877,6 @@
 	          ),
 	          React.createElement(
 	            "div",
-	            { className: "jp-details" },
-	            React.createElement(
-	              "div",
-	              { className: "jp-title", "aria-label": "title" },
-	              " "
-	            )
-	          ),
-	          React.createElement(
-	            "div",
 	            { className: "jp-no-solution" },
 	            React.createElement(
 	              "span",
