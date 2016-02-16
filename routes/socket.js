@@ -93,6 +93,27 @@ var youtubeDl = (function () {
 
 }());
 
+var newsLog = (function () {
+
+  var filepath = path.resolve(__dirname, '../public/news.json');
+
+  var saveNews = function(message) {
+    var log = getLogs();
+    fs.writeFile(filepath, JSON.stringify(log.concat(message)));
+  };
+
+  var getLogs = function() {
+    var file = fs.readFileSync(filepath, 'utf8');
+    return JSON.parse(file);
+  };
+
+  return {
+    saveNews: saveNews,
+    getLogs: getLogs
+  };
+
+}());
+
 var chatLog = (function () {
 
   var filepath = path.resolve(__dirname, '../public/chatlog.json');
@@ -169,15 +190,37 @@ module.exports = function (socket) {
   var name = userNames.getGuestName();
 
   // send the new user their name and a list of users
-  socket.emit('init', {
-    name: name,
-    users: userNames.get(),
-    messages: chatLog.getLogs()
+  mpdClient.playlistinfo(function(err, playlistInfo) {
+    socket.emit('init', {
+      name: name,
+      users: userNames.get(),
+      messages: chatLog.getLogs(),
+      news: newsLog.getLogs(),
+      playlist: playlistInfo
+    });
   });
 
   // notify other clients that a new user has joined
   socket.broadcast.emit('user:join', {
     name: name
+  });
+
+  mpdClient.on('changed', function(system) {
+    if(system == 'playlist') {
+      mpdClient.playlistinfo(function(err, info) {
+        socket.emit('playlist', {playlist: info});
+      });
+    }
+  });
+
+  // broadcast a user's message to other users
+  socket.on('send:news', function (data) {
+    var news = {
+      text: data.text,
+      timestamp: data.timestamp
+    };
+    socket.broadcast.emit('send:news', news);
+    newsLog.saveNews(news);
   });
 
   // broadcast a user's message to other users
