@@ -19947,17 +19947,16 @@
 	  },
 	  componentDidMount: function componentDidMount() {
 	    socket.on('init', this._initialize);
-	    socket.on('playlist:track', this._trackReceive);
+	    socket.on('playlist', this._playlistReceive);
 	  },
 	  _initialize: function _initialize(data) {
 	    this.setState({
 	      playlist: data.playlist
 	    });
 	  },
-	  _trackReceive: function _trackReceive(track) {
-	    var playlist = this.state.playlist;
+	  _playlistReceive: function _playlistReceive(playlist) {
+	    var playlist = playlist.playlist;
 	
-	    playlist.push(track);
 	    this.setState({ playlist: playlist });
 	  },
 	  render: function render() {

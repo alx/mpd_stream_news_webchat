@@ -117,7 +117,7 @@ var Music= React.createClass({
 
 	componentDidMount() {
 		socket.on('init', this._initialize);
-		socket.on('playlist:track', this._trackReceive);
+		socket.on('playlist', this._playlistReceive);
 	},
 
 	_initialize(data) {
@@ -126,9 +126,8 @@ var Music= React.createClass({
     });
 	},
 
-	_trackReceive(track) {
-		var {playlist} = this.state;
-		playlist.push(track);
+	_playlistReceive(playlist) {
+		var {playlist} = playlist
 		this.setState({playlist});
 	},
 
