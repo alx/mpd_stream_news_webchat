@@ -5,7 +5,12 @@ var komponist = require('komponist');
 
 var mpdClient = komponist.createConnection(6618, 'swyn.fr', function() {
   mpdClient.command('password', 'simplepass2323');
-});
+}).on('changed', function(system) {
+  console.log('Subsystem changed: ' + system);
+      mpdClient.currentsong(function(err, info) {
+        console.log(info);
+      });
+});;
 
 var youtubeDl = (function () {
 
@@ -191,12 +196,22 @@ module.exports = function (socket) {
 
   // send the new user their name and a list of users
   mpdClient.playlistinfo(function(err, playlistInfo) {
-    socket.emit('init', {
-      name: name,
-      users: userNames.get(),
-      messages: chatLog.getLogs(),
-      news: newsLog.getLogs(),
-      playlist: playlistInfo
+    mpdClient.currentsong(function(err, current) {
+      playlistInfo.forEach(function(track) {
+        if(track.Id === current.Id) {
+          track.current = true;
+        } else {
+          track.current = false;
+        }
+      });
+      console.log(playlistInfo);
+      socket.emit('init', {
+        name: name,
+        users: userNames.get(),
+        messages: chatLog.getLogs(),
+        news: newsLog.getLogs(),
+        playlist: playlistInfo
+      });
     });
   });
 
@@ -206,11 +221,19 @@ module.exports = function (socket) {
   });
 
   mpdClient.on('changed', function(system) {
-    if(system == 'playlist') {
-      mpdClient.playlistinfo(function(err, info) {
-        socket.emit('playlist', {playlist: info});
+    mpdClient.playlistinfo(function(err, playlistInfo) {
+      mpdClient.currentsong(function(err, current) {
+        playlistInfo.forEach(function(track) {
+          if(track.Id === current.Id) {
+            track.current = true;
+          } else {
+            track.current = false;
+          }
+        });
+        console.log(playlistInfo);
+        socket.emit('playlist', {playlist: playlistInfo});
       });
-    }
+    });
   });
 
   // broadcast a user's message to other users

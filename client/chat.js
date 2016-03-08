@@ -46,7 +46,7 @@ var Message = React.createClass({
 var MessageList = React.createClass({
 	render() {
 		return (
-      <div className="panel-body">
+      <div className="panel-body flex-grow">
         <ul className="chat">
 				{
 					this.props.messages.reverse().map((message, i) => {
@@ -133,6 +133,7 @@ var ChangeNameForm = React.createClass({
 	},
 
 	render() {
+
 		return(
 			<div className='panel-footer'>
         <div className="input-group">
@@ -243,7 +244,7 @@ var Chat= React.createClass({
 
 	render() {
 		return (
-      <div className="panel panel-primary">
+      <div className="panel panel-primary flex-col">
         <div className="panel-heading">
           <span className="glyphicon glyphicon-comment"></span> Chat
         </div>
@@ -256,6 +257,7 @@ var Chat= React.createClass({
         />
         <ChangeNameForm
           onChangeName={this.handleChangeName}
+          user={this.state.user}
         />
       </div>
 		);

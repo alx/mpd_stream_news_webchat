@@ -58,23 +58,23 @@
 	  render: function render() {
 	    return React.createElement(
 	      'div',
-	      { className: 'container-fluid' },
+	      { className: 'container' },
 	      React.createElement(
 	        'div',
-	        { className: 'row' },
+	        { className: 'row flex-row' },
 	        React.createElement(
 	          'div',
-	          { className: 'col-md-4' },
+	          { className: 'col-md-4 fill' },
 	          React.createElement(News, null)
 	        ),
 	        React.createElement(
 	          'div',
-	          { className: 'col-md-4' },
+	          { className: 'col-md-4 fill' },
 	          React.createElement(Music, null)
 	        ),
 	        React.createElement(
 	          'div',
-	          { className: 'col-md-4' },
+	          { className: 'col-md-4 fill' },
 	          React.createElement(Chat, null)
 	        )
 	      )
@@ -19897,10 +19897,46 @@
 	  }
 	});
 	
+	var MusicPlaylistTrack = React.createClass({
+	  displayName: "MusicPlaylistTrack",
+	  getInitialState: function getInitialState() {
+	    return { track: null };
+	  },
+	  render: function render() {
+	
+	    var thumbUrl = "/download/" + this.props.track.file.replace('mp3', 'jpg');
+	    var title = this.props.track.file.replace(/-.{11}.mp3$/gi, '').replace(/_/gi, ' ');
+	
+	    return React.createElement(
+	      "li",
+	      { className: "media" },
+	      React.createElement("img", { className: "pull-left img-responsive", src: thumbUrl }),
+	      React.createElement(
+	        "div",
+	        { className: "media-body" },
+	        React.createElement(
+	          "h4",
+	          { className: "media-heading" },
+	          title
+	        )
+	      )
+	    );
+	  }
+	});
+	
 	var MusicPlaylist = React.createClass({
 	  displayName: "MusicPlaylist",
+	  getInitialState: function getInitialState() {
+	    return { playlist: [] };
+	  },
 	  render: function render() {
-	    return React.createElement("div", { className: "music-playlist" });
+	    return React.createElement(
+	      "ul",
+	      { className: "music-playlist media-list" },
+	      this.props.playlist.map(function (track, i) {
+	        return React.createElement(MusicPlaylistTrack, { key: i, track: track });
+	      })
+	    );
 	  }
 	});
 	
@@ -19934,10 +19970,14 @@
 	        React.createElement("span", { className: "glyphicon glyphicon-music" }),
 	        " Music"
 	      ),
-	      React.createElement(MusicControl, null),
-	      React.createElement(MusicPlaylist, {
-	        playlist: this.state.playlist
-	      })
+	      React.createElement(
+	        "div",
+	        { className: "panel-body" },
+	        React.createElement(MusicControl, null),
+	        React.createElement(MusicPlaylist, {
+	          playlist: this.state.playlist
+	        })
+	      )
 	    );
 	  }
 	});
@@ -20020,7 +20060,7 @@
 		render: function render() {
 			return React.createElement(
 				'div',
-				{ className: 'panel-body' },
+				{ className: 'panel-body flex-grow' },
 				React.createElement(
 					'ul',
 					{ className: 'chat' },
@@ -20105,6 +20145,7 @@
 			this.setState({ newName: '' });
 		},
 		render: function render() {
+	
 			return React.createElement(
 				'div',
 				{ className: 'panel-footer' },
@@ -20228,7 +20269,7 @@
 		render: function render() {
 			return React.createElement(
 				'div',
-				{ className: 'panel panel-primary' },
+				{ className: 'panel panel-primary flex-col' },
 				React.createElement(
 					'div',
 					{ className: 'panel-heading' },
@@ -20243,7 +20284,8 @@
 					user: this.state.user
 				}),
 				React.createElement(ChangeNameForm, {
-					onChangeName: this.handleChangeName
+					onChangeName: this.handleChangeName,
+					user: this.state.user
 				})
 			);
 		}

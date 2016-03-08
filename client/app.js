@@ -8,15 +8,15 @@ var Chat = require('./chat');
 var App = React.createClass({
 	render() {
 		return (
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-md-4">
+      <div className="container">
+        <div className="row flex-row">
+          <div className="col-md-4 fill">
             <News />
           </div>
-          <div className="col-md-4">
+          <div className="col-md-4 fill">
             <Music />
           </div>
-          <div className="col-md-4">
+          <div className="col-md-4 fill">
             <Chat />
           </div>
         </div>

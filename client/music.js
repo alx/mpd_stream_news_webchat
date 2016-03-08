@@ -68,11 +68,43 @@ var MusicControl = React.createClass({
 	}
 });
 
+var MusicPlaylistTrack = React.createClass({
+
+	getInitialState() {
+		return {track: null};
+	},
+
+	render() {
+
+    const thumbUrl = "/download/" + this.props.track.file.replace('mp3', 'jpg');
+    const title = this.props.track.file.replace(/-.{11}.mp3$/gi, '').replace(/_/gi, ' ');
+
+		return (
+      <li className="media">
+        <img className="pull-left img-responsive" src={thumbUrl} />
+        <div className="media-body">
+          <h4 className="media-heading">{title}</h4>
+        </div>
+      </li>
+		);
+	}
+});
+
 var MusicPlaylist = React.createClass({
+
+	getInitialState() {
+		return {playlist: []};
+	},
+
 	render() {
 		return (
-			<div className='music-playlist'>
-			</div>
+			<ul className='music-playlist media-list'>
+      {
+        this.props.playlist.map((track, i) => {
+          return <MusicPlaylistTrack key={i} track={track}/>
+        })
+      }
+      </ul>
 		);
 	}
 });
@@ -106,10 +138,12 @@ var Music= React.createClass({
         <div className="panel-heading">
           <span className="glyphicon glyphicon-music"></span> Music
         </div>
-        <MusicControl />
-        <MusicPlaylist
-          playlist={this.state.playlist}
-        />
+        <div className="panel-body">
+          <MusicControl />
+          <MusicPlaylist
+            playlist={this.state.playlist}
+          />
+        </div>
       </div>
 		);
 	}
