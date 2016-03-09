@@ -5,12 +5,7 @@ var komponist = require('komponist');
 
 var mpdClient = komponist.createConnection(6618, 'swyn.fr', function() {
   mpdClient.command('password', 'simplepass2323');
-}).on('changed', function(system) {
-  console.log('Subsystem changed: ' + system);
-      mpdClient.currentsong(function(err, info) {
-        console.log(info);
-      });
-});;
+});
 
 var youtubeDl = (function () {
 
@@ -72,18 +67,18 @@ var youtubeDl = (function () {
       if(data.indexOf("Destination:") != -1) {
         destination = data.split('Destination: ').pop().trim();
       }
-      console.log('stdout: ' + data);
+      //console.log('stdout: ' + data);
     });
 
     proc.stderr.on('data', function (data) {
       data = data.toString();
       errorData += data;
-      console.log('stderr: ' + data);
+      //console.log('stderr: ' + data);
     });
 
     proc.on('exit', function (code) {
       if(errorData.length == 0) {
-        console.log(destination);
+        //console.log(destination);
         mpdClient.rescan(function() {
           mpdClient.add(destination);
         });
@@ -204,7 +199,7 @@ module.exports = function (socket) {
           track.current = false;
         }
       });
-      console.log(playlistInfo);
+      //console.log(playlistInfo);
       socket.emit('init', {
         name: name,
         users: userNames.get(),
@@ -230,7 +225,7 @@ module.exports = function (socket) {
             track.current = false;
           }
         });
-        console.log(playlistInfo);
+        //console.log(playlistInfo);
         socket.emit('playlist', {playlist: playlistInfo});
       });
     });

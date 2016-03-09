@@ -1,4 +1,5 @@
 var React = require('react');
+var classname = require('classname');
 
 var socket = io.connect();
 
@@ -78,9 +79,10 @@ var MusicPlaylistTrack = React.createClass({
 
     const thumbUrl = "/download/" + this.props.track.file.replace('mp3', 'jpg');
     const title = this.props.track.file.replace(/-.{11}.mp3$/gi, '').replace(/_/gi, ' ');
+    const style = classname({media: true, current: this.props.track.current});
 
 		return (
-      <li className="media">
+      <li className={style}>
         <img className="pull-left img-responsive" src={thumbUrl} />
         <div className="media-body">
           <h4 className="media-heading">{title}</h4>

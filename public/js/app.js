@@ -19788,9 +19788,10 @@
 /* 160 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	var React = __webpack_require__(1);
+	var classname = __webpack_require__(261);
 	
 	var socket = io.connect();
 	
@@ -19802,7 +19803,7 @@
 	    _ready = false;
 	
 	var MusicControl = React.createClass({
-	  displayName: "MusicControl",
+	  displayName: 'MusicControl',
 	
 	  componentWillUpdate: function componentWillUpdate(nextProps, nextState) {
 	    if (this.refs.jplayer && jplayer == undefined) {
@@ -19834,62 +19835,62 @@
 	
 	  render: function render() {
 	    return React.createElement(
-	      "div",
-	      { className: "music-control" },
-	      React.createElement("div", { id: "jquery_jplayer", className: "jp-jplayer", ref: "jplayer" }),
+	      'div',
+	      { className: 'music-control' },
+	      React.createElement('div', { id: 'jquery_jplayer', className: 'jp-jplayer', ref: 'jplayer' }),
 	      React.createElement(
-	        "div",
-	        { id: "jp_container_1", className: "jp-audio-stream", role: "application", "aria-label": "media player" },
+	        'div',
+	        { id: 'jp_container_1', className: 'jp-audio-stream', role: 'application', 'aria-label': 'media player' },
 	        React.createElement(
-	          "div",
-	          { className: "jp-type-single" },
+	          'div',
+	          { className: 'jp-type-single' },
 	          React.createElement(
-	            "div",
-	            { className: "jp-gui jp-interface" },
+	            'div',
+	            { className: 'jp-gui jp-interface' },
 	            React.createElement(
-	              "div",
-	              { className: "jp-volume-controls" },
+	              'div',
+	              { className: 'jp-volume-controls' },
 	              React.createElement(
-	                "button",
-	                { className: "jp-mute", role: "button", tabIndex: "0" },
-	                "mute"
+	                'button',
+	                { className: 'jp-mute', role: 'button', tabIndex: '0' },
+	                'mute'
 	              ),
 	              React.createElement(
-	                "button",
-	                { className: "jp-volume-max", role: "button", tabIndex: "0" },
-	                "max volume"
+	                'button',
+	                { className: 'jp-volume-max', role: 'button', tabIndex: '0' },
+	                'max volume'
 	              ),
 	              React.createElement(
-	                "div",
-	                { className: "jp-volume-bar" },
-	                React.createElement("div", { className: "jp-volume-bar-value" })
+	                'div',
+	                { className: 'jp-volume-bar' },
+	                React.createElement('div', { className: 'jp-volume-bar-value' })
 	              )
 	            ),
 	            React.createElement(
-	              "div",
-	              { className: "jp-controls" },
+	              'div',
+	              { className: 'jp-controls' },
 	              React.createElement(
-	                "button",
-	                { className: "jp-play", role: "button", tabIndex: "0" },
-	                "play"
+	                'button',
+	                { className: 'jp-play', role: 'button', tabIndex: '0' },
+	                'play'
 	              )
 	            )
 	          ),
 	          React.createElement(
-	            "div",
-	            { className: "jp-no-solution" },
+	            'div',
+	            { className: 'jp-no-solution' },
 	            React.createElement(
-	              "span",
+	              'span',
 	              null,
-	              "Update Required"
+	              'Update Required'
 	            ),
-	            "To play the media you will need to either update your browser to a recent version or update your ",
+	            'To play the media you will need to either update your browser to a recent version or update your ',
 	            React.createElement(
-	              "a",
-	              { href: "http://get.adobe.com/flashplayer/", target: "_blank" },
-	              "Flash plugin"
+	              'a',
+	              { href: 'http://get.adobe.com/flashplayer/', target: '_blank' },
+	              'Flash plugin'
 	            ),
-	            "."
+	            '.'
 	          )
 	        )
 	      )
@@ -19898,7 +19899,7 @@
 	});
 	
 	var MusicPlaylistTrack = React.createClass({
-	  displayName: "MusicPlaylistTrack",
+	  displayName: 'MusicPlaylistTrack',
 	  getInitialState: function getInitialState() {
 	    return { track: null };
 	  },
@@ -19906,17 +19907,18 @@
 	
 	    var thumbUrl = "/download/" + this.props.track.file.replace('mp3', 'jpg');
 	    var title = this.props.track.file.replace(/-.{11}.mp3$/gi, '').replace(/_/gi, ' ');
+	    var style = classname({ media: true, current: this.props.track.current });
 	
 	    return React.createElement(
-	      "li",
-	      { className: "media" },
-	      React.createElement("img", { className: "pull-left img-responsive", src: thumbUrl }),
+	      'li',
+	      { className: style },
+	      React.createElement('img', { className: 'pull-left img-responsive', src: thumbUrl }),
 	      React.createElement(
-	        "div",
-	        { className: "media-body" },
+	        'div',
+	        { className: 'media-body' },
 	        React.createElement(
-	          "h4",
-	          { className: "media-heading" },
+	          'h4',
+	          { className: 'media-heading' },
 	          title
 	        )
 	      )
@@ -19925,14 +19927,14 @@
 	});
 	
 	var MusicPlaylist = React.createClass({
-	  displayName: "MusicPlaylist",
+	  displayName: 'MusicPlaylist',
 	  getInitialState: function getInitialState() {
 	    return { playlist: [] };
 	  },
 	  render: function render() {
 	    return React.createElement(
-	      "ul",
-	      { className: "music-playlist media-list" },
+	      'ul',
+	      { className: 'music-playlist media-list' },
 	      this.props.playlist.map(function (track, i) {
 	        return React.createElement(MusicPlaylistTrack, { key: i, track: track });
 	      })
@@ -19941,7 +19943,7 @@
 	});
 	
 	var Music = React.createClass({
-	  displayName: "Music",
+	  displayName: 'Music',
 	  getInitialState: function getInitialState() {
 	    return { playlist: [] };
 	  },
@@ -19961,17 +19963,17 @@
 	  },
 	  render: function render() {
 	    return React.createElement(
-	      "div",
-	      { className: "panel panel-primary" },
+	      'div',
+	      { className: 'panel panel-primary' },
 	      React.createElement(
-	        "div",
-	        { className: "panel-heading" },
-	        React.createElement("span", { className: "glyphicon glyphicon-music" }),
-	        " Music"
+	        'div',
+	        { className: 'panel-heading' },
+	        React.createElement('span', { className: 'glyphicon glyphicon-music' }),
+	        ' Music'
 	      ),
 	      React.createElement(
-	        "div",
-	        { className: "panel-body" },
+	        'div',
+	        { className: 'panel-body' },
 	        React.createElement(MusicControl, null),
 	        React.createElement(MusicPlaylist, {
 	          playlist: this.state.playlist
@@ -29886,6 +29888,136 @@
 	
 	    return zh_tw;
 	});
+
+/***/ },
+/* 261 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	function classname() {
+	    var result = {},
+	        objects = {},
+	        resultString = "";
+	
+	    function add(strings) {
+	        classname.each(strings.split(" "), function (string) {
+	            result[string] = !!string;
+	        });
+	    }
+	
+	    classname.each([].slice.call(arguments), function (x) {
+	        switch (classname.getType(x)) {
+	            case "string":
+	            case "number":
+	                add(x);
+	                break;
+	
+	            case "array":
+	                add(classname.apply(null, x));
+	                break;
+	
+	            case "element":
+	                add(classname(x.className || ""));
+	                break;
+	
+	            case "nodelist":
+	                add(classname.apply(null, [].slice.call(x)));
+	                break;
+	
+	            case "jquery":
+	                add(classname.apply(null, x.get()));
+	                break;
+	
+	            case "object":
+	                objects = classname.extend(objects, x);
+	                break;
+	        }
+	    });
+	
+	    result = classname.extend(result, objects);
+	
+	    classname.each(result, function (val, key) {
+	        if (val) {
+	            resultString += " " + key;
+	        }
+	    });
+	
+	    return resultString.substr(1);
+	}
+	
+	classname.setTo = function (elements) {
+	    var type = classname.getType(elements);
+	
+	    if (type === "element") {
+	        elements = [elements];
+	    }
+	
+	    if (type === "jquery") {
+	        elements = elements.get();
+	    }
+	
+	    if (type === "nodelist") {
+	        elements = [].slice.call(elements);
+	    }
+	
+	    return function () {
+	        var classNames = classname.apply(null, arguments);
+	
+	        classname.each(elements, function (element) {
+	            element.className = classNames;
+	        });
+	    };
+	};
+	
+	classname.each = function (arr, fn) {
+	    var type = classname.getType(arr);
+	
+	    if (type === "array") {
+	        for (var i = 0; i < arr.length; i++) {
+	            fn(arr[i], i);
+	        }
+	    }
+	
+	    if (type === "object") {
+	        for (var key in arr) {
+	            fn(arr[key], key);
+	        }
+	    }
+	};
+	
+	classname.getType = function (x) {
+	    var type = Object.prototype.toString.call(x).slice(8, -1).toLowerCase();
+	
+	    if (type === "object" && x.jquery) {
+	        return "jquery";
+	    }
+	
+	    if (type.indexOf("element") > 1) {
+	        return "element";
+	    }
+	
+	    return type;
+	};
+	
+	classname.extend = function (obj1, obj2) {
+	    var result = {},
+	        objs = [obj1, obj2];
+	
+	    classname.each(objs, function (obj) {
+	        classname.each(obj, function (val, key) {
+	            if (obj.hasOwnProperty(key)) {
+	                result[key] = val;
+	            }
+	        });
+	    });
+	
+	    return result;
+	};
+	
+	if (typeof module !== "undefined" && module.exports) {
+	    module.exports = classname;
+	}
 
 /***/ }
 /******/ ]);

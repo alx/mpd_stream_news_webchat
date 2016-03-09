@@ -86,3 +86,11 @@ body{
 li.media img {
   max-width:33.33%;
 }
+
+li.media.current {
+  background-color: #337ab7;
+}
+
+li.media.current .media-heading {
+  color:#FFF;
+}
