@@ -233,12 +233,12 @@ module.exports = function (socket) {
 
   // broadcast a user's message to other users
   socket.on('send:news', function (data) {
-    var news = {
+    var item = {
       text: data.text,
       timestamp: data.timestamp
     };
-    socket.broadcast.emit('send:news', news);
-    newsLog.saveNews(news);
+    socket.broadcast.emit('send:news', item);
+    newsLog.saveNews(item);
   });
 
   // broadcast a user's message to other users
@@ -253,7 +253,7 @@ module.exports = function (socket) {
        message.timestamp > 0) {
       if(youtubeDl.testUrl(message.text)) {
         youtubeDl.download(message.text);
-        message.text = message.user + " a rajouté la piste: <a href='" + message.text + "'>" + message.text + "</a>";
+        message.text = message.user + " a rajouté un lien <a href='" + message.text + "'>youtube</a>";
         message.user = "BIBOT";
       }
       socket.broadcast.emit('send:message', message);
@@ -268,6 +268,10 @@ module.exports = function (socket) {
       userNames.free(oldName);
 
       name = data.name;
+
+      if(name == "alx") {
+        socket.emit('admin');
+      }
 
       socket.broadcast.emit('change:name', {
         oldName: oldName,
