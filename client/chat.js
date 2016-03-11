@@ -134,13 +134,20 @@ var ChangeNameForm = React.createClass({
 
 	render() {
 
+    var placeHolder = "Votre nom";
+    var buttonText = "Joindre le chat";
+    if(this.props.user && this.props.user.indexOf("noname") == -1) {
+      placeHolder = this.props.user;
+      buttonText = "Changer de nom";
+    }
+
 		return(
 			<div className='panel-footer'>
         <div className="input-group">
           <input
             type="text"
             className="form-control input-sm"
-            placeholder="Votre nom"
+            placeholder={placeHolder}
             onChange={this.onKey}
             value={this.state.newName}
           />
@@ -148,7 +155,7 @@ var ChangeNameForm = React.createClass({
             <button
               className="btn btn-warning btn-sm"
               onClick={this.handleSubmit}>
-                Utiliser ce nom
+              {buttonText}
             </button>
           </span>
         </div>
