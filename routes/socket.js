@@ -203,8 +203,12 @@ module.exports = function (socket) {
       socket.emit('init', {
         name: name,
         users: userNames.get(),
-        messages: chatLog.getLogs(),
-        news: newsLog.getLogs(),
+        messages: chatLog.getLogs().sort(function(a, b) {
+          return b.timestamp - a.timestamp;
+        }),
+        news: newsLog.getLogs().sort(function(a, b) {
+          return b.timestamp - a.timestamp;
+        }),
         playlist: playlistInfo
       });
     });

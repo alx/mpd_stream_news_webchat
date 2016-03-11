@@ -30045,7 +30045,7 @@
 		_messageReceive: function _messageReceive(message) {
 			var messages = this.state.messages;
 	
-			messages.push(message);
+			messages.unshift(message);
 			this.setState({ messages: messages });
 		},
 		_userJoined: function _userJoined(data) {
@@ -30055,7 +30055,7 @@
 			var name = data.name;
 	
 			users.push(name);
-			messages.push({
+			messages.unshift({
 				user: 'BIBOT',
 				text: name + ' est arrivé',
 				timestamp: moment().unix()
@@ -30070,7 +30070,7 @@
 	
 			var index = users.indexOf(name);
 			users.splice(index, 1);
-			messages.push({
+			messages.unshift({
 				user: 'BIBOT',
 				text: name + ' est parti',
 				timestamp: moment().unix()
@@ -30086,8 +30086,8 @@
 	
 			var index = users.indexOf(oldName);
 			users.splice(index, 1, newName);
-			messages.push({
-				user: 'APPLICATION BOT',
+			messages.unshift({
+				user: 'BIBOT',
 				text: 'Change Name : ' + oldName + ' ==> ' + newName
 			});
 			this.setState({ users: users, messages: messages });
@@ -30095,7 +30095,7 @@
 		handleMessageSubmit: function handleMessageSubmit(message) {
 			var messages = this.state.messages;
 	
-			messages.push(message);
+			messages.unshift(message);
 			this.setState({ messages: messages });
 			socket.emit('send:message', message);
 		},
@@ -30124,16 +30124,16 @@
 					React.createElement('span', { className: 'glyphicon glyphicon-comment' }),
 					' Chat'
 				),
-				React.createElement(MessageList, {
-					messages: this.state.messages
+				React.createElement(ChangeNameForm, {
+					onChangeName: this.handleChangeName,
+					user: this.state.user
 				}),
 				React.createElement(MessageForm, {
 					onMessageSubmit: this.handleMessageSubmit,
 					user: this.state.user
 				}),
-				React.createElement(ChangeNameForm, {
-					onChangeName: this.handleChangeName,
-					user: this.state.user
+				React.createElement(MessageList, {
+					messages: this.state.messages
 				})
 			);
 		}

@@ -181,7 +181,7 @@ var Chat= React.createClass({
 
 	_messageReceive(message) {
 		var {messages} = this.state;
-		messages.push(message);
+		messages.unshift(message);
 		this.setState({messages});
 	},
 
@@ -189,7 +189,7 @@ var Chat= React.createClass({
 		var {users, messages} = this.state;
 		var {name} = data;
 		users.push(name);
-		messages.push({
+		messages.unshift({
 			user: 'BIBOT',
 			text : name +' est arrivé',
       timestamp: moment().unix()
@@ -202,7 +202,7 @@ var Chat= React.createClass({
 		var {name} = data;
 		var index = users.indexOf(name);
 		users.splice(index, 1);
-		messages.push({
+		messages.unshift({
 			user: 'BIBOT',
 			text : name +' est parti',
       timestamp: moment().unix()
@@ -215,8 +215,8 @@ var Chat= React.createClass({
 		var {users, messages} = this.state;
 		var index = users.indexOf(oldName);
 		users.splice(index, 1, newName);
-		messages.push({
-			user: 'APPLICATION BOT',
+		messages.unshift({
+			user: 'BIBOT',
 			text : 'Change Name : ' + oldName + ' ==> '+ newName
 		});
 		this.setState({users, messages});
@@ -224,7 +224,7 @@ var Chat= React.createClass({
 
 	handleMessageSubmit(message) {
 		var {messages} = this.state;
-		messages.push(message);
+		messages.unshift(message);
 		this.setState({messages});
 		socket.emit('send:message', message);
 	},
@@ -248,16 +248,16 @@ var Chat= React.createClass({
         <div className="panel-heading">
           <span className="glyphicon glyphicon-comment"></span> Chat
         </div>
-        <MessageList
-          messages={this.state.messages}
+        <ChangeNameForm
+          onChangeName={this.handleChangeName}
+          user={this.state.user}
         />
         <MessageForm
           onMessageSubmit={this.handleMessageSubmit}
           user={this.state.user}
         />
-        <ChangeNameForm
-          onChangeName={this.handleChangeName}
-          user={this.state.user}
+        <MessageList
+          messages={this.state.messages}
         />
       </div>
 		);
