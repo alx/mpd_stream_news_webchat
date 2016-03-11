@@ -49,7 +49,7 @@ var MessageList = React.createClass({
       <div className="panel-body flex-grow">
         <ul className="chat">
 				{
-					this.props.messages.reverse().map((message, i) => {
+					this.props.messages.map((message, i) => {
 						return (
 							<Message
 								key={i}

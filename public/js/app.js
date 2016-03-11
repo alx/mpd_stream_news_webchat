@@ -29912,7 +29912,7 @@
 				React.createElement(
 					'ul',
 					{ className: 'chat' },
-					this.props.messages.reverse().map(function (message, i) {
+					this.props.messages.map(function (message, i) {
 						return React.createElement(Message, {
 							key: i,
 							user: message.user,
