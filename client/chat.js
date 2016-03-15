@@ -1,5 +1,6 @@
 var React = require('react');
 var moment = require('moment');
+var urlRegex = require('url-regex');
 
 var socket = io.connect();
 
@@ -29,8 +30,8 @@ var Message = React.createClass({
 
     var messageContent = <p>{this.props.text}</p>
 
-    if(this.props.url) {
-      messageContent += <p><a href={this.props.url}>youtube</a></p>
+    if(urlRegex().test(this.props.text)) {
+      messageContent = <p><a href={this.props.text}>{this.props.text}</a></p>
     }
 
 		return (
