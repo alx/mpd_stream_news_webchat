@@ -44,7 +44,7 @@ var Message = React.createClass({
               {moment.unix(this.props.timestamp).fromNow()}
             </small>
           </div>
-		      <p>{this.props.text}</p>
+          {messageContent}
         </div>
       </li>
 		);
