@@ -53,6 +53,7 @@ body{
     margin: 0;
     color: #777777;
 }
+.news li .news-body p { margin-top:20px; }
 
 .panel .slidedown .glyphicon, .chat .glyphicon
 {
