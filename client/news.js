@@ -56,7 +56,7 @@ var NewsItem = React.createClass({
 	render() {
 		return (
       <li className="left clearfix">
-        <div className="news-item clearfix">
+        <div className="news-body clearfix">
           <div className="header">
             <small className="pull-right text-muted">
               <span className="glyphicon glyphicon-time"></span>
