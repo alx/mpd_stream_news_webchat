@@ -97,6 +97,7 @@ var MessageForm = React.createClass({
     if(e.charCode == 13) {
       this.handleSubmit;
     } else {
+      e.target.value += e.key;
 		  this.setState({ text : e.target.value });
     }
 	},
