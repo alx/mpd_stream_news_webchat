@@ -253,16 +253,19 @@ module.exports = function (socket) {
       timestamp: data.timestamp
     };
     if(!userNames.claim(message.user) &&
+
        message.text.length > 0 &&
        message.timestamp > 0) {
-      /*
+
       if(youtubeDl.testUrl(message.text)) {
         youtubeDl.download(message.text);
+        /*
         message.text = message.user + " a rajouté un lien";
         message.url = message.text;
         message.user = "BIBOT";
+       */
       }
-     */
+
       socket.broadcast.emit('send:message', message);
       chatLog.saveMessage(message);
     }
