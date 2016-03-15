@@ -81,7 +81,7 @@ var MessageForm = React.createClass({
 	},
 
 	handleSubmit(e) {
-    if(this.state.text.length < 0) {
+    if(this.state.text.length > 0) {
       e.preventDefault();
       var message = {
         user : this.props.user,
@@ -114,7 +114,7 @@ var MessageForm = React.createClass({
             type="text"
             className="form-control input-sm"
             placeholder="Votre message ici..."
-            onChange={this.changeHandler}
+            onKeyPress={this.changeHandler}
             value={this.state.text}
           />
           <span className="input-group-btn">
