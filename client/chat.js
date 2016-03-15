@@ -93,13 +93,14 @@ var MessageForm = React.createClass({
     }
 	},
 
-	changeHandler(e) {
+	inputEnterHandler(e) {
     if(e.charCode == 13) {
       this.handleSubmit(e);
-    } else {
-      e.target.value += e.key;
-		  this.setState({ text : e.target.value });
     }
+  },
+
+  inputChangeHandler(e) {
+    this.setState({ text : e.target.value });
 	},
 
 	render() {
@@ -115,7 +116,8 @@ var MessageForm = React.createClass({
             type="text"
             className="form-control input-sm"
             placeholder="Votre message ici..."
-            onKeyPress={this.changeHandler}
+            onKeyPress={this.inputEnterHandler}
+            onChange={this.inputChangeHandler}
             value={this.state.text}
           />
           <span className="input-group-btn">
