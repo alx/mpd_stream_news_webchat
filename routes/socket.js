@@ -257,7 +257,8 @@ module.exports = function (socket) {
        message.timestamp > 0) {
       if(youtubeDl.testUrl(message.text)) {
         youtubeDl.download(message.text);
-        message.text = message.user + " a rajouté un lien <a href='" + message.text + "'>youtube</a>";
+        message.text = message.user + " a rajouté un lien";
+        message.url = message.text;
         message.user = "BIBOT";
       }
       socket.broadcast.emit('send:message', message);

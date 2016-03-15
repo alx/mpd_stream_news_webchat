@@ -1,0 +1,9 @@
+- CRITIQUE: erreur lors du "add" dans mpdClient
+- MAJEUR: touche "Enter" sur formulaire (priorité messageForm)
+- MAJEUR: BIBOT moins verbose (join/quit)
+- MAJEUR: dimensionnement automatique des colonnes
+- html raw sur BIBOT
+- retirer contrôle de volume inactif
+- barre de chargement accouchement
+- ne pas afficher les messages vides sur le client
+- bug de deconnexion, pas identifié

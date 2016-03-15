@@ -26,6 +26,13 @@ var UsersList = React.createClass({
 
 var Message = React.createClass({
 	render() {
+
+    var messageContent = <p>{this.props.text}</p>
+
+    if(this.props.url) {
+      messageContent += <p><a href={this.props.url}>youtube</a></p>
+    }
+
 		return (
       <li className="left clearfix">
         <div className="chat-body clearfix">
@@ -55,6 +62,7 @@ var MessageList = React.createClass({
 								key={i}
 								user={message.user}
 								text={message.text}
+								url={message.url}
 								timestamp={message.timestamp}
 							/>
 						);
@@ -73,18 +81,24 @@ var MessageForm = React.createClass({
 	},
 
 	handleSubmit(e) {
-		e.preventDefault();
-		var message = {
-			user : this.props.user,
-			text : this.state.text,
-      timestamp : moment().unix()
-		}
-		this.props.onMessageSubmit(message);
-		this.setState({ text: '' });
+    if(this.state.text.length < 0) {
+      e.preventDefault();
+      var message = {
+        user : this.props.user,
+        text : this.state.text,
+        timestamp : moment().unix()
+      }
+      this.props.onMessageSubmit(message);
+      this.setState({ text: '' });
+    }
 	},
 
 	changeHandler(e) {
-		this.setState({ text : e.target.value });
+    if(e.charCode == 13) {
+      this.handleSubmit;
+    } else {
+		  this.setState({ text : e.target.value });
+    }
 	},
 
 	render() {
@@ -173,8 +187,8 @@ var Chat= React.createClass({
 	componentDidMount() {
 		socket.on('init', this._initialize);
 		socket.on('send:message', this._messageReceive);
-		socket.on('user:join', this._userJoined);
-		socket.on('user:left', this._userLeft);
+		//socket.on('user:join', this._userJoined);
+		//socket.on('user:left', this._userLeft);
 		//socket.on('change:name', this._userChangedName);
 	},
 

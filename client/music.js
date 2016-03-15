@@ -47,13 +47,6 @@ var MusicControl = React.createClass({
         <div id="jp_container_1" className="jp-audio-stream" role="application" aria-label="media player">
           <div className="jp-type-single">
             <div className="jp-gui jp-interface">
-              <div className="jp-volume-controls">
-                <button className="jp-mute" role="button" tabIndex="0">mute</button>
-                <button className="jp-volume-max" role="button" tabIndex="0">max volume</button>
-                <div className="jp-volume-bar">
-                  <div className="jp-volume-bar-value"></div>
-                </div>
-              </div>
               <div className="jp-controls">
                 <button className="jp-play" role="button" tabIndex="0">play</button>
               </div>
