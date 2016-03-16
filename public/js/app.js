@@ -61,6 +61,27 @@
 	      { className: 'container' },
 	      React.createElement(
 	        'div',
+	        { className: 'row' },
+	        React.createElement(
+	          'div',
+	          { className: 'col-md-12' },
+	          React.createElement(
+	            'div',
+	            { className: 'progress' },
+	            React.createElement(
+	              'div',
+	              { className: 'progress-bar progress-bar-striped active progress-bar-success', role: 'progressbar', 'aria-valuenow': '45', 'aria-valuemin': '0', 'aria-valuemax': '100', style: { width: '10%' } },
+	              React.createElement(
+	                'span',
+	                { className: 'sr-only' },
+	                '45% Complete'
+	              )
+	            )
+	          )
+	        )
+	      ),
+	      React.createElement(
+	        'div',
 	        { className: 'row flex-row' },
 	        React.createElement(
 	          'div',
@@ -19809,7 +19830,7 @@
 	      { className: 'left clearfix' },
 	      React.createElement(
 	        'div',
-	        { className: 'news-item clearfix' },
+	        { className: 'news-body clearfix' },
 	        React.createElement(
 	          'div',
 	          { className: 'header' },
@@ -19836,7 +19857,7 @@
 	    return React.createElement(
 	      'ul',
 	      { className: 'news' },
-	      this.props.news.reverse().map(function (message, i) {
+	      this.props.news.map(function (message, i) {
 	        return React.createElement(NewsItem, {
 	          key: i,
 	          text: message.text,
@@ -19869,13 +19890,13 @@
 	  _newsReceive: function _newsReceive(item) {
 	    var news = this.state.news;
 	
-	    news.push(item);
+	    news.unshift(item);
 	    this.setState({ news: news, isAdmin: this.state.isAdmin });
 	  },
 	  handleMessageSubmit: function handleMessageSubmit(item) {
 	    var news = this.state.news;
 	
-	    news.push(item);
+	    news.unshift(item);
 	    this.setState({ news: news });
 	    socket.emit('send:news', item);
 	  },
@@ -19892,14 +19913,14 @@
 	      React.createElement(
 	        'div',
 	        { className: 'panel-body' },
+	        React.createElement(NewsForm, {
+	          onNewsSubmit: this.handleMessageSubmit,
+	          isAdmin: this.state.isAdmin
+	        }),
 	        React.createElement(NewsList, {
 	          news: this.state.news
 	        })
-	      ),
-	      React.createElement(NewsForm, {
-	        onNewsSubmit: this.handleMessageSubmit,
-	        isAdmin: this.state.isAdmin
-	      })
+	      )
 	    );
 	  }
 	});
@@ -29566,25 +29587,6 @@
 	            { className: 'jp-gui jp-interface' },
 	            React.createElement(
 	              'div',
-	              { className: 'jp-volume-controls' },
-	              React.createElement(
-	                'button',
-	                { className: 'jp-mute', role: 'button', tabIndex: '0' },
-	                'mute'
-	              ),
-	              React.createElement(
-	                'button',
-	                { className: 'jp-volume-max', role: 'button', tabIndex: '0' },
-	                'max volume'
-	              ),
-	              React.createElement(
-	                'div',
-	                { className: 'jp-volume-bar' },
-	                React.createElement('div', { className: 'jp-volume-bar-value' })
-	              )
-	            ),
-	            React.createElement(
-	              'div',
 	              { className: 'jp-controls' },
 	              React.createElement(
 	                'button',
@@ -29840,6 +29842,7 @@
 	
 	var React = __webpack_require__(1);
 	var moment = __webpack_require__(160);
+	var urlRegex = __webpack_require__(262);
 	
 	var socket = io.connect();
 	
@@ -29872,6 +29875,25 @@
 	var Message = React.createClass({
 		displayName: 'Message',
 		render: function render() {
+	
+			var messageContent = React.createElement(
+				'p',
+				null,
+				this.props.text
+			);
+	
+			if (urlRegex().test(this.props.text)) {
+				messageContent = React.createElement(
+					'p',
+					null,
+					React.createElement(
+						'a',
+						{ href: this.props.text },
+						this.props.text
+					)
+				);
+			}
+	
 			return React.createElement(
 				'li',
 				{ className: 'left clearfix' },
@@ -29893,11 +29915,7 @@
 							moment.unix(this.props.timestamp).fromNow()
 						)
 					),
-					React.createElement(
-						'p',
-						null,
-						this.props.text
-					)
+					messageContent
 				)
 			);
 		}
@@ -29917,6 +29935,7 @@
 							key: i,
 							user: message.user,
 							text: message.text,
+							url: message.url,
 							timestamp: message.timestamp
 						});
 					})
@@ -29931,16 +29950,23 @@
 			return { text: '' };
 		},
 		handleSubmit: function handleSubmit(e) {
-			e.preventDefault();
-			var message = {
-				user: this.props.user,
-				text: this.state.text,
-				timestamp: moment().unix()
-			};
-			this.props.onMessageSubmit(message);
-			this.setState({ text: '' });
+			if (this.state.text.length > 0) {
+				e.preventDefault();
+				var message = {
+					user: this.props.user,
+					text: this.state.text,
+					timestamp: moment().unix()
+				};
+				this.props.onMessageSubmit(message);
+				this.setState({ text: '' });
+			}
 		},
-		changeHandler: function changeHandler(e) {
+		inputEnterHandler: function inputEnterHandler(e) {
+			if (e.charCode == 13) {
+				this.handleSubmit(e);
+			}
+		},
+		inputChangeHandler: function inputChangeHandler(e) {
 			this.setState({ text: e.target.value });
 		},
 		render: function render() {
@@ -29959,7 +29985,8 @@
 						type: 'text',
 						className: 'form-control input-sm',
 						placeholder: 'Votre message ici...',
-						onChange: this.changeHandler,
+						onKeyPress: this.inputEnterHandler,
+						onChange: this.inputChangeHandler,
 						value: this.state.text
 					}),
 					React.createElement(
@@ -30038,8 +30065,8 @@
 		componentDidMount: function componentDidMount() {
 			socket.on('init', this._initialize);
 			socket.on('send:message', this._messageReceive);
-			socket.on('user:join', this._userJoined);
-			socket.on('user:left', this._userLeft);
+			//socket.on('user:join', this._userJoined);
+			//socket.on('user:left', this._userLeft);
 			//socket.on('change:name', this._userChangedName);
 		},
 		_initialize: function _initialize(data) {
@@ -30147,6 +30174,54 @@
 	});
 	
 	module.exports = Chat;
+
+/***/ },
+/* 262 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var ipRegex = __webpack_require__(263);
+	
+	module.exports = function (opts) {
+		opts = opts || {};
+	
+		var protocol = '(?:(?:[a-z]+:)?//)';
+		var auth = '(?:\\S+(?::\\S*)?@)?';
+		var ip = ipRegex.v4().source;
+		var host = '(?:(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)';
+		var domain = '(?:\\.(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)*';
+		var tld = '(?:\\.(?:[a-z\\u00a1-\\uffff]{2,}))';
+		var port = '(?::\\d{2,5})?';
+		var path = '(?:[/?#]\\S*)?';
+		var regex = [protocol, auth, '(?:localhost|' + ip + '|' + host + domain + tld + ')', port, path].join('');
+	
+		return opts.exact ? new RegExp('(?:^' + regex + '$)', 'i') : new RegExp(regex, 'ig');
+	};
+
+/***/ },
+/* 263 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	var v4 = '(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])(?:\\.(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])){3}';
+	var v6 = '(?:(?:[0-9a-fA-F:]){1,4}(?:(?::(?:[0-9a-fA-F]){1,4}|:)){2,7})+';
+	
+	var ip = module.exports = function (opts) {
+		opts = opts || {};
+		return opts.exact ? new RegExp('(?:^' + v4 + '$)|(?:^' + v6 + '$)') : new RegExp('(?:' + v4 + ')|(?:' + v6 + ')', 'g');
+	};
+	
+	ip.v4 = function (opts) {
+		opts = opts || {};
+		return opts.exact ? new RegExp('^' + v4 + '$') : new RegExp(v4, 'g');
+	};
+	
+	ip.v6 = function (opts) {
+		opts = opts || {};
+		return opts.exact ? new RegExp('^' + v6 + '$') : new RegExp(v6, 'g');
+	};
 
 /***/ }
 /******/ ]);
