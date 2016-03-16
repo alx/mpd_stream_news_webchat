@@ -207,7 +207,7 @@ module.exports = function (socket) {
           return b.timestamp - a.timestamp;
         }),
         news: newsLog.getLogs().sort(function(a, b) {
-          return a.timestamp - b.timestamp;
+          return b.timestamp - a.timestamp;
         }),
         playlist: playlistInfo
       });

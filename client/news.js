@@ -75,7 +75,7 @@ var NewsList = React.createClass({
 		return (
       <ul className="news">
       {
-        this.props.news.reverse().map((message, i) => {
+        this.props.news.map((message, i) => {
           return (
             <NewsItem
               key={i}
