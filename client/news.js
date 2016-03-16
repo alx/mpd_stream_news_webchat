@@ -133,14 +133,14 @@ var News = React.createClass({
           <span className="glyphicon glyphicon-info-sign"></span> Dernière Nouvelles
         </div>
         <div className="panel-body">
+          <NewsForm
+            onNewsSubmit={this.handleMessageSubmit}
+            isAdmin={this.state.isAdmin}
+          />
           <NewsList
             news={this.state.news}
           />
         </div>
-        <NewsForm
-          onNewsSubmit={this.handleMessageSubmit}
-          isAdmin={this.state.isAdmin}
-        />
       </div>
 		);
 	}
