@@ -29558,7 +29558,9 @@
 	        wmode: "window",
 	        useStateClassSkin: true,
 	        autoBlur: false,
-	        keyEnabled: true
+	        keyEnabled: true,
+	        errorAlerts: true,
+	        warningAlerts: true
 	      });
 	    }
 	  },
@@ -29574,19 +29576,6 @@
 	        React.createElement(
 	          'div',
 	          { className: 'jp-type-single' },
-	          React.createElement(
-	            'div',
-	            { className: 'jp-gui jp-interface' },
-	            React.createElement(
-	              'div',
-	              { className: 'jp-controls' },
-	              React.createElement(
-	                'button',
-	                { className: 'jp-play', role: 'button', tabIndex: '0' },
-	                'play'
-	              )
-	            )
-	          ),
 	          React.createElement(
 	            'div',
 	            { className: 'jp-no-solution' },

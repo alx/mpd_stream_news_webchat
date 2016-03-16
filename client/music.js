@@ -35,7 +35,9 @@ var MusicControl = React.createClass({
         wmode: "window",
         useStateClassSkin: true,
         autoBlur: false,
-        keyEnabled: true
+        keyEnabled: true,
+errorAlerts: true,
+ warningAlerts: true
       });
     }
   },
@@ -46,11 +48,6 @@ var MusicControl = React.createClass({
         <div id="jquery_jplayer" className="jp-jplayer" ref="jplayer"></div>
         <div id="jp_container_1" className="jp-audio-stream" role="application" aria-label="media player">
           <div className="jp-type-single">
-            <div className="jp-gui jp-interface">
-              <div className="jp-controls">
-                <button className="jp-play" role="button" tabIndex="0">play</button>
-              </div>
-            </div>
             <div className="jp-no-solution">
               <span>Update Required</span>
               To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
