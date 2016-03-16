@@ -4,6 +4,7 @@ var ReactDOM = require('react-dom');
 var News = require('./news');
 var Music = require('./music');
 var Chat = require('./chat');
+var ProgressBar = require('./progressbar');
 
 var App = React.createClass({
 	render() {
@@ -11,11 +12,7 @@ var App = React.createClass({
       <div className="container">
         <div className="row">
           <div className="col-md-12">
-            <div className="progress">
-              <div className="progress-bar progress-bar-striped active progress-bar-success" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style={{width: '0%'}}>
-                <span className="sr-only">45% Complete</span>
-              </div>
-            </div>
+            <ProgressBar />
           </div>
         </div>
         <div className="row flex-row">

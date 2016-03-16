@@ -120,9 +120,12 @@ var News = React.createClass({
 	},
 
 	handleMessageSubmit(item) {
-		var {news} = this.state;
-		news.unshift(item);
-		this.setState({news});
+    var intRegex = /^\d+$/;
+    if(!intRegex.test(item.text)) {
+      var {news} = this.state;
+      news.unshift(item);
+      this.setState({news});
+    }
 		socket.emit('send:news', item);
 	},
 

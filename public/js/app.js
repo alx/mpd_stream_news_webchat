@@ -52,6 +52,7 @@
 	var News = __webpack_require__(159);
 	var Music = __webpack_require__(259);
 	var Chat = __webpack_require__(261);
+	var ProgressBar = __webpack_require__(264);
 	
 	var App = React.createClass({
 	  displayName: 'App',
@@ -65,19 +66,7 @@
 	        React.createElement(
 	          'div',
 	          { className: 'col-md-12' },
-	          React.createElement(
-	            'div',
-	            { className: 'progress' },
-	            React.createElement(
-	              'div',
-	              { className: 'progress-bar progress-bar-striped active progress-bar-success', role: 'progressbar', 'aria-valuenow': '45', 'aria-valuemin': '0', 'aria-valuemax': '100', style: { width: '10%' } },
-	              React.createElement(
-	                'span',
-	                { className: 'sr-only' },
-	                '45% Complete'
-	              )
-	            )
-	          )
+	          React.createElement(ProgressBar, null)
 	        )
 	      ),
 	      React.createElement(
@@ -19894,10 +19883,13 @@
 	    this.setState({ news: news, isAdmin: this.state.isAdmin });
 	  },
 	  handleMessageSubmit: function handleMessageSubmit(item) {
-	    var news = this.state.news;
+	    var intRegex = /^\d+$/;
+	    if (!intRegex.test(item.text)) {
+	      var news = this.state.news;
 	
-	    news.unshift(item);
-	    this.setState({ news: news });
+	      news.unshift(item);
+	      this.setState({ news: news });
+	    }
 	    socket.emit('send:news', item);
 	  },
 	  render: function render() {
@@ -30222,6 +30214,46 @@
 		opts = opts || {};
 		return opts.exact ? new RegExp('^' + v6 + '$') : new RegExp(v6, 'g');
 	};
+
+/***/ },
+/* 264 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1);
+	
+	var socket = io.connect();
+	
+	var ProgressBar = React.createClass({
+		displayName: 'ProgressBar',
+		getInitialState: function getInitialState() {
+			return { percent: '0%' };
+		},
+		componentDidMount: function componentDidMount() {
+			socket.on('init', this._initialize);
+			socket.on('send:progress', this._progressReceive);
+		},
+		_initialize: function _initialize(data) {
+			this.setState({
+				percent: '0%'
+			});
+		},
+		_progressReceive: function _progressReceive(percent) {
+			this.setState({
+				percent: percent + '%'
+			});
+		},
+		render: function render() {
+			return React.createElement(
+				'div',
+				{ className: 'progress' },
+				React.createElement('div', { className: 'progress-bar progress-bar-striped active progress-bar-success', role: 'progressbar', 'aria-valuenow': '45', 'aria-valuemin': '0', 'aria-valuemax': '100', style: { width: this.state.percent } })
+			);
+		}
+	});
+	
+	module.exports = ProgressBar;
 
 /***/ }
 /******/ ]);

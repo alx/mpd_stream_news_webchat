@@ -237,12 +237,18 @@ module.exports = function (socket) {
 
   // broadcast a user's message to other users
   socket.on('send:news', function (data) {
-    var item = {
-      text: data.text,
-      timestamp: data.timestamp
-    };
-    socket.broadcast.emit('send:news', item);
-    newsLog.saveNews(item);
+    var intRegex = /^\d+$/;
+    if(intRegex.test(data.text)) {
+      socket.emit('send:progress', data.text);
+      socket.broadcast.emit('send:progress', data.text);
+    } else {
+      var item = {
+        text: data.text,
+        timestamp: data.timestamp
+      };
+      socket.broadcast.emit('send:news', item);
+      newsLog.saveNews(item);
+    }
   });
 
   // broadcast a user's message to other users
