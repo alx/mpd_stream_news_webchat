@@ -9,6 +9,11 @@ html,body {
 body{
   padding-top:15px;
 }
+
+.music-control {
+  display:none;
+}
+
 .users{
 	float : right;
 	margin-right: 1.5em;
@@ -60,10 +65,13 @@ body{
     margin-right: 5px;
 }
 
+.panel-primary {
+  height: calc(100vh - 105px);
+}
+
 .panel-body
 {
     overflow-y: scroll;
-    height:500px;
 }
 
 ::-webkit-scrollbar-track
