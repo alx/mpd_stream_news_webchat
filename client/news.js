@@ -115,13 +115,13 @@ var News = React.createClass({
 
 	_newsReceive(item) {
 		var {news} = this.state;
-		news.push(item);
+		news.unshift(item);
 		this.setState({news: news, isAdmin: this.state.isAdmin});
 	},
 
 	handleMessageSubmit(item) {
 		var {news} = this.state;
-		news.push(item);
+		news.unshift(item);
 		this.setState({news});
 		socket.emit('send:news', item);
 	},
