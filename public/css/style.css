@@ -66,12 +66,12 @@ body{
 }
 
 .panel-primary {
-  height: calc(100vh - 105px);
+  height: calc(100vh - 50px);
+  overflow-y: scroll;
 }
 
 .panel-body
 {
-    overflow-y: scroll;
 }
 
 ::-webkit-scrollbar-track
