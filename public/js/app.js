@@ -19756,6 +19756,7 @@
 	
 	var React = __webpack_require__(1);
 	var moment = __webpack_require__(160);
+	var urlRegex = __webpack_require__(262);
 	
 	var socket = io.connect();
 	
@@ -19814,6 +19815,33 @@
 	var NewsItem = React.createClass({
 	  displayName: 'NewsItem',
 	  render: function render() {
+	
+	    var content = React.createElement(
+	      'p',
+	      null,
+	      this.props.text
+	    );
+	
+	    if (urlRegex().test(this.props.text)) {
+	      content = React.createElement(
+	        'p',
+	        null,
+	        React.createElement(
+	          'a',
+	          { href: this.props.text },
+	          this.props.text
+	        )
+	      );
+	    }
+	
+	    if (urlRegex().test(this.props.text) && this.props.text.endsWith('.jpg')) {
+	      content = React.createElement(
+	        'p',
+	        null,
+	        React.createElement('img', { className: 'img-responsive', src: this.props.text })
+	      );
+	    }
+	
 	    return React.createElement(
 	      'li',
 	      { className: 'left clearfix' },
@@ -19830,11 +19858,7 @@
 	            moment.unix(this.props.timestamp).format("DD/MM/YYYY - HH:mm")
 	          )
 	        ),
-	        React.createElement(
-	          'p',
-	          null,
-	          this.props.text
-	        )
+	        content
 	      )
 	    );
 	  }

@@ -1,5 +1,6 @@
 var React = require('react');
 var moment = require('moment');
+var urlRegex = require('url-regex');
 
 var socket = io.connect();
 
@@ -54,6 +55,17 @@ var NewsForm = React.createClass({
 
 var NewsItem = React.createClass({
 	render() {
+
+    var content = <p>{this.props.text}</p>
+
+    if(urlRegex().test(this.props.text)) {
+      content = <p><a href={this.props.text}>{this.props.text}</a></p>
+    }
+
+    if(urlRegex().test(this.props.text) && this.props.text.endsWith('.jpg')) {
+      content = <p><img className="img-responsive" src={this.props.text}/></p>
+    }
+
 		return (
       <li className="left clearfix">
         <div className="news-body clearfix">
@@ -63,7 +75,7 @@ var NewsItem = React.createClass({
               {moment.unix(this.props.timestamp).format("DD/MM/YYYY - HH:mm")}
             </small>
           </div>
-		      <p>{this.props.text}</p>
+          {content}
         </div>
       </li>
 		);
