@@ -14,6 +14,13 @@ body{
   /*display:none;*/
 }
 
+.music-control .glyphicon {
+  font-size: 16px;
+}
+.music-control .glyphicon:hover {
+  cursor: pointer;
+}
+
 .users{
 	float : right;
 	margin-right: 1.5em;
@@ -68,6 +75,7 @@ body{
 .panel-primary {
   height: calc(100vh - 80px);
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .panel-body

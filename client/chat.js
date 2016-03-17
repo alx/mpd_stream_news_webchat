@@ -1,6 +1,7 @@
 var React = require('react');
 var moment = require('moment');
 var urlRegex = require('url-regex');
+var Autolinker = require( 'autolinker' );
 
 var socket = io.connect();
 
@@ -31,7 +32,7 @@ var Message = React.createClass({
     var messageContent = <p>{this.props.text}</p>
 
     if(urlRegex().test(this.props.text)) {
-      messageContent = <p><a href={this.props.text}>{this.props.text}</a></p>
+      messageContent = <p dangerouslySetInnerHTML={{__html: Autolinker.link(this.props.text)}}/>
     }
 
 		return (

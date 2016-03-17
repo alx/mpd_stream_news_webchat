@@ -35,22 +35,36 @@ var MusicControl = React.createClass({
         wmode: "window",
         useStateClassSkin: true,
         autoBlur: false,
-        keyEnabled: true,
-errorAlerts: true,
- warningAlerts: true
+        keyEnabled: true
       });
     }
   },
 
+  setVolumeOff() {
+    $('.glyphicon').addClass('hidden');
+    $('.glyphicon-volume-off').removeClass('hidden');
+    $(this.refs.jplayer).jPlayer("clearMedia");
+  },
+
+  setVolumeUp() {
+    $('.glyphicon').addClass('hidden');
+    $('.glyphicon-volume-up').removeClass('hidden');
+    $(this.refs.jplayer).jPlayer("setMedia", stream).jPlayer('play');
+  },
+
 	render() {
 		return (
-			<div className='music-control'>
-        <div id="jquery_jplayer" className="jp-jplayer" ref="jplayer"></div>
-        <div id="jp_container_1" className="jp-audio-stream" role="application" aria-label="media player">
-          <div className="jp-type-single">
-            <div className="jp-no-solution">
-              <span>Update Required</span>
-              To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
+      <div className="music-control">
+        <span className="pull-right glyphicon glyphicon-volume-off hidden" onClick={this.setVolumeUp}></span>
+        <span className="pull-right glyphicon glyphicon-volume-up" onClick={this.setVolumeOff}></span>
+        <div className='music-player'>
+          <div id="jquery_jplayer" className="jp-jplayer" ref="jplayer"></div>
+          <div id="jp_container_1" className="jp-audio-stream" role="application" aria-label="media player">
+            <div className="jp-type-single">
+              <div className="jp-no-solution">
+                <span>Update Required</span>
+                To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
+              </div>
             </div>
           </div>
         </div>
@@ -127,10 +141,10 @@ var Music= React.createClass({
 		return (
       <div className="panel panel-primary">
         <div className="panel-heading">
+          <MusicControl />
           <span className="glyphicon glyphicon-music"></span> Music
         </div>
         <div className="panel-body">
-          <MusicControl />
           <MusicPlaylist
             playlist={this.state.playlist}
           />

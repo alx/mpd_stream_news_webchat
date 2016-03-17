@@ -1,5 +1,8 @@
 'use strict';
 
+// turn off limits by default
+require('events').EventEmitter.prototype._maxListeners = 0;
+
 /**
  * Module dependencies.
  */

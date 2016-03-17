@@ -16,13 +16,13 @@ var App = React.createClass({
           </div>
         </div>
         <div className="row flex-row">
-          <div className="col-md-4 fill">
+          <div className="col-xs-4 fill">
             <News />
           </div>
-          <div className="col-md-4 fill">
+          <div className="col-xs-4 fill">
             <Music />
           </div>
-          <div className="col-md-4 fill">
+          <div className="col-xs-4 fill">
             <Chat />
           </div>
         </div>

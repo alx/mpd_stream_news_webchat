@@ -59,7 +59,7 @@ var NewsItem = React.createClass({
     var content = <p>{this.props.text}</p>
 
     if(urlRegex().test(this.props.text)) {
-      content = <p><a href={this.props.text}>{this.props.text}</a></p>
+      content = <p><a target="_blank" href={this.props.text}>{this.props.text}</a></p>
     }
 
     if(urlRegex().test(this.props.text) && this.props.text.endsWith('.jpg')) {
